@@ -1,0 +1,59 @@
+@import './variable.module.scss';
+
+
+/*global*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    color: $primaryColor; 
+    // background-color: $secondaryBackground;
+    background: linear-gradient(45deg, rgba($secondaryBackground,0.6), rgba($secondaryBackground, 0.2));
+}
+/* end of globals */
+
+.app {
+    display: grid;
+    margin: auto;
+    background-color: $mainBackground;
+}
+
+
+@media only screen and (min-width: 326px){
+    html {
+        font-size: 56.25%;
+    }
+}
+@media only screen and (min-width: 600px){
+    html {
+        font-size: 70%;
+    }
+
+    .app {
+        margin: 3%;
+    }
+}
+@media only screen and (min-width: 800px){
+    html {
+        font-size: 87.5%;
+    }
+}
+@media only screen and (min-width: 1200px){
+    html {
+        font-size: 100%;
+    }
+}
+@media only screen and (min-width: 1800px){
+    html {
+        font-size: 120%;
+    }
+}
