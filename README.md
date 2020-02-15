@@ -1,4 +1,4 @@
-# Find the movie you want to see next
+# Find the movie or tv series that you want to see next
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
