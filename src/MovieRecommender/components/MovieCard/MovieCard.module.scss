@@ -1,9 +1,29 @@
 .movieCard{
     flex: 1;
-    min-width: 5rem;
-    margin: 0 .2rem;
+    font-size:0;
+    line-height:0;
+    max-width: 60%;
+    margin: auto;
+    margin-bottom: 2rem;
+    // padding-bottom: 2rem;
+    transition: all .3s;
+    box-shadow: 0 10px 20px rgba(0, 0,0, 0.5);
+    // border-radius: 5px;
+    &:hover {
+        transform: scale(1.05);
+        
+    }
 }
 
 .movieCard img{
+    border-radius: 5px;
     max-width: calc(100%);
+    
+}
+
+@media only screen and (min-width: 600px){
+    .movieCard{
+        max-width: 15%;
+        margin: 0 1.5rem;
+    }
 }

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { FaWindowClose, FaBars } from 'react-icons/fa';
 
 import styles from './Navbar.module.scss';
+// import { DataContext } from '../../context';
 
 
 const handleNavLinks = (navLinks, handleMenuHide, clsName=null) => {
@@ -24,59 +25,65 @@ const handleNavLinks = (navLinks, handleMenuHide, clsName=null) => {
   );
 }
 
-// class Navbar extends Component{
 const Navbar = (props) => {
+  // console.log('props in navbar');
+  // console.log(props);
   
-  let logo, navBtn, navLinks, navDivClass, sidebarJSX; 
+  const {navLinks, navMenuShow, handleMenuHide, handleMenuShow} = props
+
+  let logo, navBtn, navLinksJSX, navDivClass, sidebarJSX; 
 
   logo =( 
     <Link 
       to='/'
-      onClick={props.handleMenuHide}>
-      <img className={styles.logo}
-      src="https://www.themoviedb.org/assets/2/v4/logos/primary-green-d70eebe18a5eb5b166d5c1ef0796715b8d1a2cbc698f96d311d62f894ae87085.svg" alt="the movie db logo"/>
+      onClick={handleMenuHide}>
+      <img className={styles.logo} 
+      src='https://www.themoviedb.org/assets/2/v4/logos/primary-blue-40c00543e47b657e8e53a2f3e8650eb9de230316cf158965edb012d72ddca755.svg'
+      alt="the movie db logo"/>
     </Link>
   );
   
-  navLinks = handleNavLinks(props.navLinks, props.handleMenuHide);
-  sidebarJSX = null;
+  navLinksJSX = handleNavLinks(navLinks, handleMenuHide);
+  // sidebarJSX = null;
   navDivClass = null;
 
   navBtn = (
     <button 
       className={styles.btn}
       type='button'
-      onClick={props.handleMenuShow}>
+      onClick={handleMenuShow}>
         <FaBars className={styles.btn_icon}></FaBars>
     </button>)
 
-  if (props.menuShow) {    
-    // sidebarJSX = <Sidebar>{navLinks}</Sidebar>
-    sidebarJSX=handleNavLinks(props.navLinks, props.handleMenuHide, styles.nav_link_clicked)
+  if (navMenuShow) {    
+    // sidebarJSX=handleNavLinks(navLinks, handleMenuHide, styles.nav_link_clicked)
     navDivClass = styles.nav_onClick;
 
     navBtn = (
       <button 
         className={styles.btn}
         type='button'
-        onClick={props.handleMenuHide}>
+        onClick={handleMenuHide}>
           <FaWindowClose className={styles.btn_icon}></FaWindowClose>
       </button>)
   } 
   
   return (
-    <div className={navDivClass}>
+    // <div className={navDivClass}>
       <nav className={styles.nav}>
         {logo}
         <div className={styles.links_container}>
-          {navLinks}
+          {navLinksJSX}
           {navBtn}        
         </div>
       </nav>
-      {sidebarJSX}
-    </div>
+      // {sidebarJSX}
+    // </div>
   )
   
 }
 
 export default Navbar
+
+// logo in green
+// src="https://www.themoviedb.org/assets/2/v4/logos/primary-green-d70eebe18a5eb5b166d5c1ef0796715b8d1a2cbc698f96d311d62f894ae87085.svg"

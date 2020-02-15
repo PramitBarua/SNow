@@ -1,0 +1,24 @@
+@import '../../variable.module.scss';
+
+.info {
+    margin: auto;
+    text-align: center;
+    font-size: 1.2rem;
+    p{
+        padding-bottom: 2rem;
+    }
+    a {
+        padding: .5rem;
+        border-radius: 5px;
+        background-color: $secondaryBackground;
+        transition: all 0.3s;
+        &:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 20px rgba(0, 0,0, 0.2);
+          }
+    }
+}
+
+// .longText {
+//     line-height: normal;
+// }

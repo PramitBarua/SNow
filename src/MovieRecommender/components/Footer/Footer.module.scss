@@ -1,5 +1,6 @@
+@import '../../variable.module.scss';
 .footer {
-    margin: 4rem auto;
+    margin: 0.5rem auto;
     text-align: center;
     p {
         font-size: 1rem;
@@ -7,6 +8,13 @@
     }
     a{
         text-decoration: none;
-        padding: 0.2rem 0;
+        padding: 0.2rem;
+        border-radius: 5px;
+        background-color: $secondaryBackground;
+        transition: all 0.2s;
+        &:hover {
+            transform: scale(1.1);
+            
+        }
     }
 }

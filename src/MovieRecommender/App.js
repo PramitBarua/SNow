@@ -1,73 +1,51 @@
-import React, { Component } from 'react';
+import React, { useContext } from 'react';
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 import styles from './App.module.scss';
 
 import Home from './pages/Home/Home';
-import SingleMovie from './pages/SingleMovie';
-import Info from './pages/Info';
+import AdvanceSearch from './pages/AdvancedSearch/AdvanceSearch';
+import SingleMovie from './pages/SingleMovie/SingleMovie';
+import Info from './pages/Info/Info';
 import About from './pages/About';
 import Footer from './components/Footer/Footer';
 
 import Navbar from './components/Navbar/Navbar';
-// import {BaseDataProvider} from './context';
+import {DataContext} from './context';
 
-import Test from './components/Test';
 
-class App extends Component {
+// import Test from './components/Test';
 
-  state = {
-    navLinks: [
-      {name: 'Home', linkTo: '/'},
-      {name: 'Advance search', linkTo: '/'},
-      {name: 'About', linkTo: '/about'}
-    ],
-    navMenuShow: false
+const App = () => {
+  
+  const {navMenuShow, loadingFailed, navLinks, handleMenuHide, handleMenuShow} = useContext(DataContext);
+
+  let pages = null;
+  if (!navMenuShow) {
+    pages= (
+    <Switch>
+      <Route exact path='/' component={Home} />
+      <Route exact path='/advSearch' component={AdvanceSearch} />
+      <Route exact path='/movie/:id' component={SingleMovie} />
+      <Route exact path='/about' component={About} />
+      <Route component={Info} />
+    </Switch>)
   }
-
-  handleMenuShow = () => {
-    this.setState({
-      navMenuShow: true
-    })
-  }
-
-  handleMenuHide = () => {
-    this.setState({
-      navMenuShow: false
-      
-    })
-  }
-
-  render() {
-    let pages = null;
-    if (!this.state.navMenuShow) {
-      pages= (
-      <Switch>
-        <Route exact path='/' component={Home} />
-        <Route exact path='/movie/:slug' component={SingleMovie} />
-        <Route exact path='/about' component={About} />
-        <Route component={Info} />
-      </Switch>)
-    }
-    return (      
-      // <BaseDataProvider>
-        <Router>
-          <div className={styles.app}>
-            <Navbar 
-              navLinks={this.state.navLinks}
-              handleMenuHide={this.handleMenuHide}
-              handleMenuShow={this.handleMenuShow}
-              menuShow={this.state.navMenuShow}
-            />
-
-            {pages}
-            <Footer/>
-          </div>
-          {/* <Test/> */}
-        </Router>
-      // </BaseDataProvider>
-    )
-  }
+  return (      
+      <Router>
+        <div className={styles.app}>
+          <Navbar
+          navLinks={navLinks}
+          navMenuShow={navMenuShow}
+          handleMenuHide={handleMenuHide}
+          handleMenuShow={handleMenuShow}/>
+          {loadingFailed ? <Info/> : pages}
+          <Footer/>
+        </div>
+        {/* <Test/> */}
+      </Router>
+  )
 }
+
 
 export default App;

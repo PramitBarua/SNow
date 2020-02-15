@@ -9,28 +9,52 @@
 }
 
 html {
-    font-size: 62.5%;
+    font-size: 56.25%;
 }
 
 body {
     font-family: 'Lato', sans-serif;
     font-weight: 300;
     color: $primaryColor; 
-    // background-color: $secondaryBackground;
-    background: linear-gradient(45deg, rgba($secondaryBackground,0.6), rgba($secondaryBackground, 0.2));
+    background: linear-gradient(
+        45deg, 
+        rgba($secondaryBackground, 0.6), 
+        rgba($secondaryBackground, 0.2));
+}
+a {
+    text-decoration: none;
+    color: $primaryColor;
+    display: inline-block;
+    text-transform: capitalize;    
+}
+h1 {
+    font-size: 260%;
+}
+
+h2 {
+    font-size: 200%;
+    font-weight: 300;
+}
+
+h3 {
+    font-size: 150%;
+    font-weight: 300;
 }
 /* end of globals */
 
 .app {
     display: grid;
+    grid-template-rows: auto 2fr auto;
+    align-items: stretch;
     margin: auto;
     background-color: $mainBackground;
+    min-height: 100vh;
 }
 
 
 @media only screen and (min-width: 326px){
     html {
-        font-size: 56.25%;
+        font-size: 62.5%;
     }
 }
 @media only screen and (min-width: 600px){
@@ -38,9 +62,10 @@ body {
         font-size: 70%;
     }
 
-    .app {
-        margin: 3%;
-    }
+    // .app {
+    //     margin: 4vh;
+    //     min-height: 92vh;
+    // }
 }
 @media only screen and (min-width: 800px){
     html {
