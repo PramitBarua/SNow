@@ -14,7 +14,7 @@ import Navbar from './components/Navbar/Navbar';
 import {DataContext} from './context';
 
 
-// import Test from './components/Test';
+import Test from './components/Test';
 
 const App = () => {
   
@@ -26,7 +26,7 @@ const App = () => {
     <Switch>
       <Route exact path='/' component={Home} />
       <Route exact path='/advSearch' component={AdvanceSearch} />
-      <Route exact path='/movie/:id' component={SingleMovie} />
+      <Route exact path='/:media_type/:id' component={SingleMovie} />
       <Route exact path='/about' component={About} />
       <Route component={Info} />
     </Switch>)
@@ -42,7 +42,7 @@ const App = () => {
           {loadingFailed ? <Info/> : pages}
           <Footer/>
         </div>
-        {/* <Test/> */}
+        <Test/>
       </Router>
   )
 }

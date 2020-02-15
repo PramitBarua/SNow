@@ -1,0 +1,21 @@
+@import '../../variable.module.scss';
+
+.suggestions {
+  width: 65%;
+  margin: auto;
+  list-style: none;
+  font-size: 1.5rem;
+
+  & li {
+    text-decoration: none;
+    &:hover {
+      background-color: $secondaryBackground;
+    }
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .suggestions {
+    width: 50%;
+  }
+}

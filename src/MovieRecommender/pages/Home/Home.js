@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import MovieCard from '../../components/MovieCard/MovieCard';
+import Search from '../../components/Search/Search';
 import styles from './Home.module.scss';
 import { DataContext } from '../../context';
 
@@ -15,12 +16,14 @@ const Home = () => {
   
   if (!loading) {
     [movieCards, seriesCards] = [movies, series].map(showitems => {
+      console.log('home.js showitems');
+      console.log(showitems);
       return (
         showitems.map(item=>{
           return (
             <MovieCard 
             key={item.id}
-            toLink={`/movie/${item.id}`}
+            toLink={`/${item.media_type}/${item.id}`}
             image_path={item.posterPath}
             alt={`poster of ${item.title}`}/>  
           )
@@ -30,27 +33,24 @@ const Home = () => {
 
     CardsJSX = (
       <>
-        {/* <div> */}
-          <p className={styles.homeText}>Most popular movies</p>
-          <div className={styles.cardSliderWrapper}>
-            {movieCards}
-          </div>
-        {/* </div> */}
+        <Search/>
+        <p className={styles.homeText}>Most popular movies</p>
+        <div className={styles.cardSliderWrapper}>
+          {movieCards}
+        </div>
     
-        {/* <div> */}
-          <p className={styles.homeText}>Most popular series</p>
-          <div className={styles.cardSliderWrapper}>
-            {seriesCards}
-          </div>
-        {/* </div> */}
+        <p className={styles.homeText}>Most popular series</p>
+        <div className={styles.cardSliderWrapper}>
+          {seriesCards}
+        </div>
       </>
-    );     
+    )
   }
   
   return (
-    <div className={styles.home}>
+    <>
       {CardsJSX}
-    </div>
+    </>
   )
   
 }

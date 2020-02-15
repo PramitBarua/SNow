@@ -4,10 +4,13 @@ import { DataContext } from '../../context';
 import styles from './SingleMovie.module.scss';
 
 const SingleMovie = (props) => {
+  console.log('singleMovie.js props');
+  console.log(props);
   const { getClickedShow } = useContext(DataContext);
   
-  const showId = props.match.params.id;  
-  const showDetails = getClickedShow(parseInt(showId));
+  const showId = props.match.params.id;
+  const showtype = props.match.params.media_type;
+  const showDetails = getClickedShow(showtype, parseInt(showId));
 
   let movieJSX = null;
 

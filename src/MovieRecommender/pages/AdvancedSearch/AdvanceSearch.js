@@ -3,7 +3,9 @@ import React from 'react';
 const AdvanceSearch = () => {
   return (
     <div>
-      hello from AdvanceSearch
+      <form action="" method="get" class="form-example">
+        <input type="text" placeholder='Search'/>
+      </form>
     </div>
   )
 }
