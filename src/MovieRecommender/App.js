@@ -1,50 +1,157 @@
-import React, { useContext } from 'react';
+import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import Axios from 'axios';
 
 import styles from './App.module.scss';
 
 import Home from './pages/Home/Home';
-import AdvanceSearch from './pages/AdvancedSearch/AdvanceSearch';
-import SingleMovie from './pages/SingleMovie/SingleMovie';
+import AdvanceSearch from './pages/Explore/Explore';
+import SingleMovie from './pages/SinglePage/SinglePage';
 import Info from './pages/Info/Info';
 import About from './pages/About';
 import Footer from './components/Footer/Footer';
-
 import Navbar from './components/Navbar/Navbar';
-import {DataContext} from './context';
+import NavMenu from './components/NavMenu/NavMenu';
+import { functionGeneral } from './General';
 
 
-import Test from './components/Test';
+// import Test from './components/Test';
 
-const App = () => {
+class App extends Component {
+  KEY = functionGeneral().getKey();
+  imageURL = functionGeneral().getImageURL();
+  genreObj = functionGeneral().getGenre();
+  baseURL = functionGeneral().getBaseURL();
   
-  const {navMenuShow, loadingFailed, navLinks, handleMenuHide, handleMenuShow} = useContext(DataContext);
-
-  let pages = null;
-  if (!navMenuShow) {
-    pages= (
-    <Switch>
-      <Route exact path='/' component={Home} />
-      <Route exact path='/advSearch' component={AdvanceSearch} />
-      <Route exact path='/:media_type/:id' component={SingleMovie} />
-      <Route exact path='/about' component={About} />
-      <Route component={Info} />
-    </Switch>)
+  state = {
+    navLinks: [
+      {id: 1, name: 'Home', linkTo: '/'},
+      {id:2, name: 'Explore', linkTo: '/advSearch'},
+      {id:3, name: 'About', linkTo: '/about'}
+    ],
+    movies:[],
+    TVs:[],
+    persons:[],
+    navMenuShow:false,
+    loading:true,
+    loadingFailed: false,
+    errorMessage: ''
   }
-  return (      
-      <Router>
-        <div className={styles.app}>
-          <Navbar
-          navLinks={navLinks}
-          navMenuShow={navMenuShow}
-          handleMenuHide={handleMenuHide}
-          handleMenuShow={handleMenuShow}/>
-          {loadingFailed ? <Info/> : pages}
-          <Footer/>
-        </div>
-        <Test/>
-      </Router>
-  )
+
+  
+
+  componentDidMount() {
+    console.log('app.js componentDidMount');
+    
+    const promiseMovie = Axios.get(`${this.baseURL.discover}/movie?api_key=${this.KEY}`);
+    
+    const promiseTV = Axios.get(`${this.baseURL.discover}/tv?api_key=${this.KEY}&language=en-US&sort_by=popularity.desc&page=1&timezone=America%2FNew_York&include_null_first_air_dates=false`);
+
+    const promisePerson = Axios.get(`${this.baseURL.popularPerson}api_key=${this.KEY}&language=en-US&page=1`)
+
+    Promise.all([promiseMovie, promiseTV, promisePerson])
+    .then(respose=>{
+      console.log('app.js componentDidMount response')
+      console.log(respose);
+      const movies = respose[0].data.results.map(movie => {
+        movie.posterPath = `${this.imageURL.urlBase}${this.imageURL.sizePoster}${movie.poster_path}`;
+        
+        movie.media_type = 'movie';
+
+        return {...movie}
+      })
+      const TVs = respose[1].data.results.map(TV => {
+        TV.posterPath = `${this.imageURL.urlBase}${this.imageURL.sizePoster}${TV.poster_path}`;
+
+        TV.media_type = 'tv';
+
+        return {...TV}
+      })
+      const persons = respose[2].data.results.map(person => {
+        person.posterPath = `${this.imageURL.urlBase}${this.imageURL.sizePoster}${person.profile_path}`;
+
+        person.media_type = 'person';
+
+        return {...person}
+      })
+      // console.log(movies, series);
+      this.setState({
+        movies,
+        TVs,
+        persons,
+        loading: false
+      })
+    })
+    .catch(err => {
+      console.log(err);
+      this.setState({
+        loading:false,
+        loadingFailed: true,
+        errorMessage: err
+      })
+    })
+  }
+
+  handleMenuShow = () => {
+    this.setState({
+      navMenuShow: true
+    })
+  }
+
+  handleMenuHide = () => {
+    this.setState({
+      navMenuShow: false      
+    })
+  }
+
+  render() {
+    let routePages, infoPage, navMenuBtn = null;
+    if (this.state.loadingFailed) {
+      infoPage = <Route>
+        <Info>{this.state.errorMessage}</Info>
+      </Route>
+    } else if (!this.state.navMenuShow) {
+      routePages= (
+      <Switch>
+        <Route exact path='/'>
+          <Home 
+          displayItems={[
+            {heading:'most popular Movies', data:this.state.movies}, 
+            {heading:'most popular serieses', data:this.state.TVs}, 
+            {heading:'most popular persons', data:this.state.persons}
+          ]}
+          loading={this.state.loading}/>
+        </Route>
+        <Route exact path='/advSearch' component={AdvanceSearch} />
+        <Route exact path='/:media_type/:id' component={SingleMovie} />
+        <Route exact path='/about' component={About} />
+        <Route component={Info} />
+      </Switch>)
+    } else {
+      // for mobile nav button
+      navMenuBtn = <NavMenu
+      handleMenuHide={this.handleMenuHide}
+      navLinks={this.state.navLinks}/>
+    }
+  
+    console.log('app.js render');
+    return (      
+        <Router>
+          <div className={styles.app}>
+            <Navbar
+            navLinks={this.state.navLinks}
+            navMenuShow={this.state.navMenuShow}
+            handleMenuHide={this.handleMenuHide}
+            handleMenuShow={this.handleMenuShow}/>
+            {routePages}
+            {infoPage}
+            {navMenuBtn}
+            <Footer/>
+          </div>
+          {/* <Test/> */}
+        </Router>
+    )
+  }
 }
 
 

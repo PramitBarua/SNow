@@ -1,26 +1,46 @@
-@import "../../variable.module.scss";
+// @import "../../variable.module.scss";
 
-.cardSliderWrapper {
-  display: flex;
-  flex-direction: column;
-  // justify-content: space-between;
-  padding: 0 1rem;
-  margin: auto;
-  margin-bottom: 3rem;
-}
+// // .popularDiv{
+// //   border:1px solid red;
+  
+// // }
 
-.homeText {
-  font-size: 2rem;
-  padding: 0 2rem;
-  margin-bottom: 1rem;
-  text-transform: capitalize;
-}
+// .cardSliderWrapper {
+//   border:1px solid  blue;
+//   display: flex;
+//   // flex-direction: column;
+//   // justify-content: space-between;
+//   padding: 0 1rem;
+//   margin: auto;
+//   margin-bottom: 3rem;
+
+//   & button {
+//     background-image: linear-gradient(90deg, rgba($darkBackground, .5), rgba($secondaryBackground, 1));
+//     border: none;
+//     z-index: 10;
+//     min-width: 10%;
+//   }
+// }
+
+// .cardsDiv {
+//   border:1px solid  green;
+//   // display: flex;  
+// }
 
 
 
-@media only screen and (min-width: 600px) {
-  .cardSliderWrapper {
-    flex-direction: row;
-    justify-content: space-between;
-  }
-}
+
+// .homeText {
+//   font-size: 2rem;
+//   padding: 0 2rem;
+//   margin-bottom: 1rem;
+//   text-transform: capitalize;
+// }
+
+
+// @media only screen and (min-width: 600px) {
+//   .cardSliderWrapper {
+//     flex-direction: row;
+//     justify-content: space-between;
+//   }
+// }

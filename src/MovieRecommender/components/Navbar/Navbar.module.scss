@@ -28,17 +28,22 @@
     list-style: none;
     display: none;
     & li a {
+      position: relative;
       margin-left: 4rem;
       font-size: 2rem;
-      text-transform: uppercase;
+      text-transform: capitalize;
       word-spacing: 0.5rem;
       padding: 0.2rem;
       border-radius: 5px;
       transition: all 0.3s;
       &:hover {
         transform: scale(1.1);
-        background-color: $secondaryBackground;
-        box-shadow: 0 10px 20px rgba(0, 0,0, 0.2);
+        background-image: linear-gradient(90deg, rgba($darkBackground, .5), rgba($secondaryBackground, 1));
+
+        // background-color: $secondaryBackground;
+        // border: 1px solid $primaryColor;
+        box-shadow: 0 5px 10px rgba(0, 0,0, 0.2);
+        
       }
     }
   }

@@ -12,12 +12,14 @@ const handleNavLinks = (navLinks, handleMenuHide, clsName=null) => {
   // console.log(linkObj);
   return (
     <ul className={clsName}>
-      {navLinks.map((link, index) => {
+      {navLinks.map((link) => {
         return (
-          <li key={index}>
+          <li key={link.id}>
             <Link
-            to={link.linkTo}
-            onClick={handleMenuHide}>{link.name}</Link>
+            to={link.linkTo}>
+            {/* onClick={handleMenuHide}> */}
+              {link.name}
+            </Link>
           </li>
         );
       })}
@@ -31,7 +33,8 @@ const Navbar = (props) => {
   
   const {navLinks, navMenuShow, handleMenuHide, handleMenuShow} = props
 
-  let logo, navBtn, navLinksJSX, navDivClass, sidebarJSX; 
+  let logo, navBtn, navLinksJSX;
+  // , navDivClass, sidebarJSX; 
 
   logo =( 
     <Link 
@@ -45,7 +48,7 @@ const Navbar = (props) => {
   
   navLinksJSX = handleNavLinks(navLinks, handleMenuHide);
   // sidebarJSX = null;
-  navDivClass = null;
+  // navDivClass = null;
 
   navBtn = (
     <button 
@@ -57,7 +60,7 @@ const Navbar = (props) => {
 
   if (navMenuShow) {    
     // sidebarJSX=handleNavLinks(navLinks, handleMenuHide, styles.nav_link_clicked)
-    navDivClass = styles.nav_onClick;
+    // navDivClass = styles.nav_onClick;
 
     navBtn = (
       <button 
@@ -67,6 +70,8 @@ const Navbar = (props) => {
           <FaWindowClose className={styles.btn_icon}></FaWindowClose>
       </button>)
   } 
+
+  console.log('navbar.js render');
   
   return (
     // <div className={navDivClass}>

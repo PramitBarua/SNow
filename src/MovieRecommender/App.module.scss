@@ -44,12 +44,18 @@ h3 {
 
 .app {
   display: grid;
-  grid-template-rows: auto 2fr auto;
-  align-items: stretch;
+  grid-template-rows: auto;
+  align-items: baseline;
   margin: auto;
-  background-color: $mainBackground;
+  // background-color: $mainBackground;
+  background: linear-gradient(
+    90deg,
+    rgba($mainBackground, 1),
+    rgba($mainBackground, 0.7)
+  );
   min-height: 100vh;
 }
+
 
 @media only screen and (min-width: 326px) {
   html {

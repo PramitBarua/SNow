@@ -1,21 +1,25 @@
 @import '../../variable.module.scss';
 
 .suggestions {
-  width: 65%;
-  margin: auto;
+  // width: 65%;
+  // margin: auto;
   list-style: none;
   font-size: 1.5rem;
 
   & li {
     text-decoration: none;
+    // width: 100%;
     &:hover {
       background-color: $secondaryBackground;
     }
   }
+  // & a {
+  //   width: 100%;
+  // }
 }
 
-@media only screen and (min-width: 600px) {
-  .suggestions {
-    width: 50%;
-  }
-}
+// @media only screen and (min-width: 600px) {
+//   .suggestions {
+//     width: 50%;
+//   }
+// }

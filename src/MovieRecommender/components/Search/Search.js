@@ -14,7 +14,14 @@ export default class Search extends Component {
 
   state = {
     results: [],
-    cursor: 0
+    cursor: 0,
+    searchShow:false
+  }
+
+  removeSeachResults = () => {
+    this.setState({
+      searchShow:false
+    })
   }
 
   handleSearchInputOnFocus = (e) => {
@@ -30,23 +37,32 @@ export default class Search extends Component {
   }
   
   handleSearchInputOnChange = (e) => {
-    console.log('home.js handleSearchInputOnChange');
+    console.log('Search.js handleSearchInputOnChange');
     console.log(e.target.value);
-    let query = e.target.value
+
+    let query, quickresults;
+    
+    query = e.target.value
     if (query.length > 1) {
       axios.get(`${API_URL}api_key=${KEY}&language=en-US&query=${query}&page=1&include_adult=false`)
       .then(response => {
-        console.log(response.data.results.slice(0,4));
-        let quickresults = response.data.results.slice(0,5).map(result => {
+        console.log('search.js search result sliced');
+        console.log(response.data.results);
+        quickresults = response.data.results.map(result => {
           if (result.media_type === 'person' || result.media_type === 'tv') {
             return {id:result.id, type:result.media_type, title:result.name}
           }
           return {id:result.id, type:result.media_type, title:result.title}
+        });
+        quickresults = quickresults.filter(result => {
+          return result.title.toLowerCase().includes(query.toLowerCase())
         })
-        console.log('home.js quickresults');
+
+        console.log('search.js quickresults');
         console.log(quickresults);
         this.setState({
-          results: quickresults
+          results: quickresults.slice(0,5),
+          searchShow:true
         })
       })
     } else {
@@ -57,7 +73,6 @@ export default class Search extends Component {
   }
 
   handleKeyDown(e) {
-
     const { cursor, results } = this.state
     // arrow up/down button should select next/previous list element
     if (e.keyCode === 38 && cursor > 0) {
@@ -73,23 +88,31 @@ export default class Search extends Component {
   // }
 
   render() {
+
+    console.log('search.js render');
+    // console.log('search.js render this.props');
+    // console.log(this.props);
+    
+    let suggestions = this.state.searchShow ? <Suggestions 
+    className={styles.searchSuggestion}
+    resutls={this.state.results}
+    removeSeachResults={this.removeSeachResults}/> 
+    : null
+
     return (
-      <>
-        <form className={styles.inputWrapper}>
-          <span className={styles.floating_label}>Search Movie, TV Series or Actor...</span>
-          <input type="select"
+      <div className={styles.inputWrapper}>
+        <form className={styles.inputform}>
+          <span className={styles.floating_label}>Search Movie, TV Series or Person...</span>
+          <input type="select" 
           className={styles.homeInput}
           onFocus={(e) => this.handleSearchInputOnFocus(e)}
           onBlur={(e) => this.handleSearchInputOnBlur(e)}
           onChange={(e) => this.handleSearchInputOnChange(e)}
           onKeyDown={(e) => this.handleSearchInputOnChange(e)}
           />
-          
         </form>
-        <Suggestions 
-          className={styles.searchSuggestion}
-          resutls={this.state.results}/>
-      </>
+        {suggestions}
+      </div>
     )
   }
 }

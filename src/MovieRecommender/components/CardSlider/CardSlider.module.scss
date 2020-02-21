@@ -1,0 +1,65 @@
+@import "../../variable.module.scss";
+
+// .popularDiv{
+//   border:1px solid red;
+  
+// }
+
+.homeText {
+  font-size: 2rem;
+  padding: 0 2rem;
+  margin-bottom: 1rem;
+  text-transform: capitalize;
+}
+
+.btnWrapper {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  
+  & button {
+    background: none;
+    border: none;
+    margin: 2% 0;
+    font-size: 1.5rem;
+    color: $primaryColor;
+    padding: .2rem;
+    padding-top: .5rem;
+  }
+  // & button:visited {
+  //   background: none;
+  //   border: none;
+  //   margin: 2% 0;
+  //   font-size: 1.5rem;
+  //   color: $primaryColor;
+  //   padding: .2rem;    
+  // }
+  // & .btnRight {
+  //   background-image: linear-gradient(90deg, rgba($darkBackground, .5), rgba($secondaryBackground, 1));      
+  //   border: none;
+  //   // margin: 0 auto;
+  //   text-align: start;
+  // }
+}
+
+.cardWrapper {
+  // border:1px solid  blue;
+  display: flex;
+  // flex-direction: column;
+  justify-content: space-between;
+  padding: 0 1rem;
+  // margin: auto 0;
+}
+
+
+.cardsDiv {
+  border:1px solid  green;
+  // display: flex;  
+}
+
+@media only screen and (min-width: 600px) {
+  .cardSliderWrapper {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
