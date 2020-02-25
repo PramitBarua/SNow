@@ -7,10 +7,11 @@ import styles from './CardSlider.module.scss';
 class CardSlider extends Component {
   constructor(props) {
     super(props);
-    console.log('cardSlider.js constructor window.innerWidth');
-    console.log(window.innerWidth);
+    // console.log('cardSlider.js constructor window.innerWidth');
+    // console.log(window.innerWidth);
 
     let windowMobile, end, cardRenderSteps;
+    let imageArray = [];
     
     if (window.innerWidth < 600) {
       windowMobile=true;
@@ -30,12 +31,12 @@ class CardSlider extends Component {
   }
 
   componentDidMount() {
-    console.log('cardSlider.js componentDidMount');
+    // console.log('cardSlider.js componentDidMount');
     window.addEventListener('resize', this.handleResize);
   }
 
   componentWillUnmount() {
-    console.log('cardSlider.js componentWillUnmount');
+    // console.log('cardSlider.js componentWillUnmount');
     window.removeEventListener('resize', this.handleResize);
   }
 
@@ -64,6 +65,23 @@ class CardSlider extends Component {
     }
   }
 
+  // handlePreloadImage = (links) => {
+  //   this.imageArray = links.map((link, index)=>{
+  //     let img = new Image();
+  //     img.onload = () => this.handleImageLoad(index)
+  //     img.src = link
+
+  //     return {
+  //       url: link,
+  //       loader: false
+  //     }
+  //   })
+  // }
+
+  // handleImageLoad = (index) => {
+  //   this.imageArray[index].loaded = true
+  // }
+
   handleRightButtonClick = () => {
     
     let oldState = {...this.state};
@@ -75,8 +93,8 @@ class CardSlider extends Component {
       oldState.start = oldState.start + this.state.cardRenderSteps;
       oldState.end = oldState.end + this.state.cardRenderSteps;
     }
-    console.log('CardSlider.js handleRightButtonClick oldstate');
-    console.log(oldState);
+    // console.log('CardSlider.js handleRightButtonClick oldstate');
+    // console.log(oldState);
     this.setState({
       ...oldState
     })    
@@ -93,27 +111,52 @@ class CardSlider extends Component {
       oldState.start = oldState.start - this.state.cardRenderSteps;
       oldState.end = oldState.end - this.state.cardRenderSteps;
     }
-    console.log('CardSlider.js handleLeftButtonClick oldstate');
-    console.log(oldState);
+    // console.log('CardSlider.js handleLeftButtonClick oldstate');
+    // console.log(oldState);
     this.setState({
       ...oldState
     })    
   }
 
   render() {
-    console.log('CardSlider.js render')
-    let cards = this.props.displayItems.data
-    .slice(this.state.start, this.state.end)
-    .map(item=>{
-      const name = item.title ? item.title : item.name;
-      return (
-        <Card 
-        key={item.id}
-        toLink={`/${item.media_type}/${item.id}`}
-        image_path={item.posterPath}
-        alt={`poster of ${name}`}/>  
-      )
-    })
+    // console.log('CardSlider.js render');
+
+    let dataLength, sliderBtnJSX, renderData, cards = null;
+
+    dataLength = this.props.displayItems.data.length;
+
+    if (dataLength >= this.state.cardRenderSteps*2) {
+      sliderBtnJSX = (
+      <div className={styles.btnWrapper}>
+        <button
+        onClick={this.handleLeftButtonClick}><FaRegArrowAltCircleLeft/></button>
+        <button
+        onClick={this.handleRightButtonClick}><FaRegArrowAltCircleRight/></button>  
+      </div>)
+    }
+
+    if (dataLength <= this.state.cardRenderSteps) {
+      renderData=this.props.displayItems.data
+    } else {
+      renderData=this.props.displayItems.data.slice(0,parseInt(dataLength/this.state.cardRenderSteps)*this.state.cardRenderSteps)
+    }
+
+    if (dataLength === 0) {
+      cards = <p className={styles.errorMessage}>Nothing has Found!!! Please try again</p>
+    } else {
+      cards = renderData
+      .slice(this.state.start, this.state.end)
+      .map(item=>{
+        const name = item.title ? item.title : item.name;
+        return (
+          <Card 
+          key={item.id}
+          toLink={`/${item.media_type}/${item.id}`}
+          image_path={item.posterPath}
+          alt={`poster of ${name}`}/>  
+        )
+      })
+    }
 
     return (
       <div>
@@ -123,12 +166,7 @@ class CardSlider extends Component {
         <div className={styles.cardWrapper}>
           {cards}
         </div>
-        <div className={styles.btnWrapper}>
-          <button
-          onClick={this.handleLeftButtonClick}><FaRegArrowAltCircleLeft/></button>
-          <button
-          onClick={this.handleRightButtonClick}><FaRegArrowAltCircleRight/></button>  
-        </div>
+        {sliderBtnJSX}
       </div>
     )
   }

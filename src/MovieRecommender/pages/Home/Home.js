@@ -10,20 +10,18 @@ const Home = (props) => {
   let CardsJSX;
   
   if (!props.loading) {
-    console.log('home.js props.cardRenderSteps');
-    console.log(props.cardRenderSteps);
+    
     CardsJSX = (
       <>
         <Search/>
         {props.displayItems
         .map((item, index) => {
-          console.log('home.js item');
-          console.log(item);
+          
           return (
             <CardSlider
               key={index}
               displayItems={item}
-              cardRenderSteps={props.cardRenderSteps}
+              // cardRenderSteps={props.cardRenderSteps}
             />          
           )}
         )}
@@ -33,7 +31,7 @@ const Home = (props) => {
     CardsJSX = <Loading/>
   }
 
-  console.log('Home.js render')
+  // console.log('Home.js render');
   
   return (
     <>

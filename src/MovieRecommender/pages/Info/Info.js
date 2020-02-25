@@ -4,11 +4,11 @@ import styles from './Info.module.scss';
 
 const Info = (props) => {
   console.log('info.js render');
-  console.log(props)
+  // console.log(props)
   return (
     <div className={styles.info}>
       <p>Something went wrong!!!</p>
-      <p className={styles.longText}>{props.children.message}</p>
+      {/* <p className={styles.longText}>{props.children.message}</p> */}
       <Link
       to={`/`}>Go back to home</Link>
     </div>

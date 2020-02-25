@@ -71,7 +71,7 @@ const Navbar = (props) => {
       </button>)
   } 
 
-  console.log('navbar.js render');
+  // console.log('navbar.js render');
   
   return (
     // <div className={navDivClass}>

@@ -1,0 +1,22 @@
+@import '../../variable.module.scss';
+
+.wrapperDiv {
+  display: flex;
+  align-items: center;
+
+  & input {
+    border: 1rem solid $primaryColor;
+    margin: auto 0.4rem;
+    cursor: pointer;
+    
+  }
+  & label {
+    width: 100%;
+    cursor: pointer;
+  }  
+}
+
+.wrapperDivActive {
+  background-color: $primaryColor;
+  color: $offWhite;
+}

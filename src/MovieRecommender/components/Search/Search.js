@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { functionGeneral } from '../../General';
 
 import styles from './Search.module.scss';
 import Suggestions from '../Suggestions/Suggestions';
 
-const KEY = functionGeneral().getKey();
+const KEY = process.env.REACT_APP_MOVIE_API_KEY;
 const API_URL = 'https://api.themoviedb.org/3/search/multi?';
 
 
@@ -33,21 +32,22 @@ export default class Search extends Component {
     e.target.parentElement.classList.remove(styles.inputWrapperOnfocus);
     if (e.target.value === ''){
       e.target.previousElementSibling.classList.remove(styles.floating_label_onfocus);
+      this.removeSeachResults()
     }
   }
   
   handleSearchInputOnChange = (e) => {
-    console.log('Search.js handleSearchInputOnChange');
-    console.log(e.target.value);
-
     let query, quickresults;
     
-    query = e.target.value
+    query = e.target.value;
+    // console.log('Search.js handleSearchInputOnChange query.length');
+    // console.log(query.length);
+    
     if (query.length > 1) {
       axios.get(`${API_URL}api_key=${KEY}&language=en-US&query=${query}&page=1&include_adult=false`)
       .then(response => {
-        console.log('search.js search result sliced');
-        console.log(response.data.results);
+        // console.log('search.js search result sliced');
+        // console.log(response.data.results);
         quickresults = response.data.results.map(result => {
           if (result.media_type === 'person' || result.media_type === 'tv') {
             return {id:result.id, type:result.media_type, title:result.name}
@@ -58,16 +58,18 @@ export default class Search extends Component {
           return result.title.toLowerCase().includes(query.toLowerCase())
         })
 
-        console.log('search.js quickresults');
-        console.log(quickresults);
+        // console.log('search.js quickresults');
+        // console.log(quickresults);
         this.setState({
           results: quickresults.slice(0,5),
           searchShow:true
         })
       })
     } else {
+      // console.log('search.js in else block')
       this.setState({
-        results: []
+        results: [],
+        searchShow:false
       })
     }
   }
@@ -89,14 +91,15 @@ export default class Search extends Component {
 
   render() {
 
-    console.log('search.js render');
+    // console.log('search.js render');
     // console.log('search.js render this.props');
     // console.log(this.props);
     
     let suggestions = this.state.searchShow ? <Suggestions 
     className={styles.searchSuggestion}
     resutls={this.state.results}
-    removeSeachResults={this.removeSeachResults}/> 
+    onFocus={this.state.searchShow}
+    removeResults={this.removeSeachResults}/> 
     : null
 
     return (
@@ -104,11 +107,10 @@ export default class Search extends Component {
         <form className={styles.inputform}>
           <span className={styles.floating_label}>Search Movie, TV Series or Person...</span>
           <input type="select" 
-          className={styles.homeInput}
           onFocus={(e) => this.handleSearchInputOnFocus(e)}
           onBlur={(e) => this.handleSearchInputOnBlur(e)}
           onChange={(e) => this.handleSearchInputOnChange(e)}
-          onKeyDown={(e) => this.handleSearchInputOnChange(e)}
+          // onKeyDown={(e) => this.handleSearchInputOnChange(e)}
           />
         </form>
         {suggestions}

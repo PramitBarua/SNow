@@ -28,8 +28,8 @@
     // background-color: $mainBackground;
     background: linear-gradient(
     90deg,
-    rgba($mainBackground, 0.7),
-    rgba($mainBackground, 1)
+    rgba($mainBackground, .7),
+    rgba($offWhite, 0.3)
   );
 
     &:focus {
@@ -45,7 +45,7 @@
   position: absolute;
   font-size: 1.5rem;
   color: gray;
-  top: 0rem;
+  top: .3rem;
   left: 0.5rem;
   transition: all 0.2s;
   pointer-events: none;
@@ -61,8 +61,8 @@
 .inputWrapperOnfocus {
   background: linear-gradient(
     to right,
-    rgba($primaryColor, 1),
-    rgba($primaryColor, 0.1)
+    rgba($primaryColor, .7),
+    rgba($offWhite, 0.3)
   );
 }
 

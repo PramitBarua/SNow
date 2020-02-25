@@ -12,14 +12,17 @@ const Suggestions = (props) => {
     <li key={r.id}>
       <Link 
       to={`/${r.type}/${r.id}`}
-      onClick={props.removeSeachResults}
+      onClick={props.removeResults}
       >{r.title}
       </Link>
     </li>
   ))
 
-  console.log('suggestions.js render')
-  return <ul className={styles.suggestions}>{options}</ul>
+  // console.log('suggestions.js render');
+  // console.log('suggestion.js props.onFocus');
+  // console.log(props.onFocus)
+  let stylesName = props.onFocus? `${styles.suggestions} ${styles.active}`: styles.suggestions;
+  return <ul className={stylesName}>{options}</ul>
 }
 
 export default Suggestions

@@ -10,6 +10,7 @@ import { functionGeneral } from '../../General';
 
 
 class SinglePage extends Component {
+  
   state = {
     loading: true,
     data: {}
@@ -18,7 +19,7 @@ class SinglePage extends Component {
   getData = () => {
     const baseURL = functionGeneral().getBaseURL();
     const imageURL = functionGeneral().getImageURL();
-    const KEY = functionGeneral().getKey();
+    const KEY = process.env.REACT_APP_MOVIE_API_KEY;
     const id = this.props.match.params.id;
     const media_type = this.props.match.params.media_type;
 
@@ -26,29 +27,34 @@ class SinglePage extends Component {
 
     const url = `${baseURL.byId}/${media_type}/${id}?api_key=${KEY}&language=en-US`
     //https://api.themoviedb.org/3/movie/{movie_id}?api_key=<<api_key>>&language=en-US
+    console.log('singleMovie.js url');
+    console.log(url);
 
     Axios.get(url)
     .then(response => {
-      console.log('singlePage.js getData response');
-      console.log(response);
       data = {...response.data};
-
-      console.log('singlePage.js getData data.poster_path');
-      console.log(data.poster_path);
-      
-      
         
       data.backdropPath = data.backdrop_path ? `${imageURL.urlBase}${imageURL.sizeBackDrop}${data.backdrop_path}` : null;
 
       data.media_type = media_type;
+
       
-      // data.genre = this.formatGenre(data.genre_ids);
       if (media_type === 'movie' || media_type === 'tv') {
         data.title = data.title ? data.title : data.name;
         data.posterPath = data.poster_path ? `${imageURL.urlBase}${imageURL.sizePoster}${data.poster_path}` : defaultPoster;
         data.releaseDate = data.release_date ? data.release_date : data.first_air_date;
         data.avgVote = data.vote_average ? data.vote_average : null;
-        data.runtime = data.runtime ? data.runtime : data.episode_run_time
+        
+        if (data.runtime) {
+          if (typeof data.runtime === 'object'){
+            data.runtime = data.runtime.join(', ')
+          }
+        } else {
+          if (typeof data.episode_run_time === 'object'){
+            data.runtime = data.episode_run_time.join(', ')
+          }
+        }
+        // data.runtime = data.runtime ? data.runtime.join(', ') : data.episode_run_time.join(', ')
         data.genre = data.genres.map(genre => genre.name);
         
       } else {
@@ -56,8 +62,8 @@ class SinglePage extends Component {
         data.homepage = data.homepage ? data.homepage : '-'
         
       }
-      console.log('SinglePage.js data');
-      console.log(data);
+      // console.log('SinglePage.js data');
+      // console.log(data);
 
       this.setState({
         data,
@@ -73,22 +79,23 @@ class SinglePage extends Component {
   }
 
   componentDidMount() {
-    console.log('singlePage.js componentDidMount');
+    // console.log('singlePage.js componentDidMount');
     this.getData();
   }
 
   componentDidUpdate(prevProps) {
-    console.log('singlePage.js componentDidUpdate');
+    // console.log('singlePage.js componentDidUpdate');
 
     if (this.props.match.params.media_type === prevProps.match.params.media_type && this.props.match.params.id === prevProps.match.params.id){
-      console.log('singlePage.js componentDidUpdate dont update');
+      // console.log('singlePage.js componentDidUpdate dont update');
     } else {
-      console.log('singlePage.js componentDidUpdate should update');
+      // console.log('singlePage.js componentDidUpdate should update');
       this.getData();      
     }
   }
 
   render() {
+    console.log(this.props);
     let pageJSX, articleJSX, data = null;
     if (this.state.loading) {
       pageJSX = <Loading/>

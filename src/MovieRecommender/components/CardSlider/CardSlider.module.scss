@@ -46,7 +46,7 @@
   // border:1px solid  blue;
   display: flex;
   // flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-evenly;
   padding: 0 1rem;
   // margin: auto 0;
 }
@@ -55,6 +55,9 @@
 .cardsDiv {
   border:1px solid  green;
   // display: flex;  
+}
+.errorMessage {
+  font-size: 1.5rem;
 }
 
 @media only screen and (min-width: 600px) {
