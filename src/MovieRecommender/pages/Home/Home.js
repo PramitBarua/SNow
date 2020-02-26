@@ -8,15 +8,13 @@ import Loading from '../../components/Loading/Loading';
 const Home = (props) => {
 
   let CardsJSX;
-  
-  if (!props.loading) {
-    
+
+  if (!props.loading) {    
     CardsJSX = (
-      <>
+      <div>
         <Search/>
         {props.displayItems
-        .map((item, index) => {
-          
+        .map((item, index) => {          
           return (
             <CardSlider
               key={index}
@@ -25,9 +23,10 @@ const Home = (props) => {
             />          
           )}
         )}
-      </>
+      </div>
     )
-  } else {
+  } 
+  else {
     CardsJSX = <Loading/>
   }
 

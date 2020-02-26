@@ -11,8 +11,7 @@ class CardSlider extends Component {
     // console.log(window.innerWidth);
 
     let windowMobile, end, cardRenderSteps;
-    let imageArray = [];
-    
+        
     if (window.innerWidth < 600) {
       windowMobile=true;
       end=1;
@@ -64,23 +63,6 @@ class CardSlider extends Component {
       }
     }
   }
-
-  // handlePreloadImage = (links) => {
-  //   this.imageArray = links.map((link, index)=>{
-  //     let img = new Image();
-  //     img.onload = () => this.handleImageLoad(index)
-  //     img.src = link
-
-  //     return {
-  //       url: link,
-  //       loader: false
-  //     }
-  //   })
-  // }
-
-  // handleImageLoad = (index) => {
-  //   this.imageArray[index].loaded = true
-  // }
 
   handleRightButtonClick = () => {
     
