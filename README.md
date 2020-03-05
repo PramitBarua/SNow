@@ -2,7 +2,7 @@
 Find the movie or TV show that you want to see next
 
 ## Description
-React Application that allows the user to search [the Movie Database (TMDb)](https://developers.themoviedb.org/3/getting-started/introduction)
+A React application that allows the user to search [the Movie Database (TMDb)](https://developers.themoviedb.org/3/getting-started/introduction)
 
 ## Author
 Pramit Barua 2020
@@ -15,10 +15,10 @@ Pramit Barua 2020
 * [Demo](#demo)
 
 ## About this Project
-A React application that allows the user to search for a movie, TV show or a person using the Movie Database (TMDb) API. In the home page the user can see the current popular movies, TV shows and persons. The explore section gives options for indepth search. The search results shows at the bottom of the page (after search button)
+A React application that allows the user to search for a movie, TV show, or a person using the Movie Database (TMDb) API. On the home page, the user can see the current popular movies, TV shows, and persons. The explore section gives options for an in-depth search. The search results show at the bottom of the page (after search button)
 
 ## Goal for this Project
-The goal of this project was to learn about React, React Router, intregate API in React App and SASS.
+The goal of this project was to learn about React, React Router, integrate API in React App and SASS.
 
 ## Technologies Used
 * React
@@ -27,10 +27,10 @@ The goal of this project was to learn about React, React Router, intregate API i
 * IMDb API
 
 ## What I learned
-From this project I learned more about how the React library works and was able to successfully make calls to a third party API from my application. I also learned about components, component state and multi-page-feeling in a single-page-app.
+From this project, I have learned more about how the React library works and the integration process to make calls to a third-party API from my application. I also learned about components, component state, and multi-page-feeling in a single-page-app.
 
 ## Demo
 ![](demos/demo.gif)
 
 ## Contact me
-If you like my project you can contact me <pramit.barua@gmail.com>
+If you like my project, you can contact me at <pramit.barua@gmail.com>
