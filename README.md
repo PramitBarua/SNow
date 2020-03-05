@@ -24,7 +24,7 @@ The goal of this project was to learn about React, React Router, integrate API i
 * React
 * SASS
 * javaScript
-* IMDb API
+* Movie Database (TMDb) API
 
 ## What I learned
 From this project, I have learned more about how the React library works and the integration process to make calls to a third-party API from my application. I also learned about components, component state, and multi-page-feeling in a single-page-app.
