@@ -1,47 +1,48 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import Axios from 'axios';
+import React, { Component } from "react";
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
+import Axios from "axios";
 
-import styles from './App.module.scss';
+import styles from "./App.module.scss";
 
-import Home from './pages/Home/Home';
-import AdvanceSearch from './pages/Explore/Explore';
-import SingleMovie from './pages/SinglePage/SinglePage';
-import Info from './pages/Info/Info';
-import About from './pages/About/About';
-import Footer from './components/Footer/Footer';
-import Navbar from './components/Navbar/Navbar';
-import NavMenu from './components/NavMenu/NavMenu';
-import { functionGeneral } from './General';
+import Home from "./pages/Home/Home";
+import AdvanceSearch from "./pages/Explore/Explore";
+import SingleMovie from "./pages/SinglePage/SinglePage";
+import Info from "./pages/Info/Info";
+import About from "./pages/About/About";
+import Footer from "./components/Footer/Footer";
+import Navbar from "./components/Navbar/Navbar";
+import NavMenu from "./components/NavMenu/NavMenu";
+import { functionGeneral } from "./General";
 
+import defaultPoster from "./assets/images/no_poster_found.png";
 
 // import Test from './components/Test';
 
 class App extends Component {
   KEY = process.env.REACT_APP_MOVIE_API_KEY;
-  generalFunc = functionGeneral();  
+  generalFunc = functionGeneral();
   imageURL = this.generalFunc.getImageURL();
   // genreObj = this.generalFunc.getGenre();
   baseURL = this.generalFunc.getBaseURL();
-  
+
   state = {
     navLinks: [
-      {id: 1, name: 'Home', linkTo: '/'},
-      {id:2, name: 'Explore', linkTo: '/advSearch'},
-      {id:3, name: 'About', linkTo: '/about'}
+      { id: 1, name: "Home", linkTo: "/" },
+      { id: 2, name: "Explore", linkTo: "/advSearch" },
+      { id: 3, name: "About", linkTo: "/about" }
     ],
-    movies:[],
-    TVs:[],
-    persons:[],
-    navMenuShow:false,
-    loading:true,
+    movies: [],
+    TVs: [],
+    persons: [],
+    navMenuShow: false,
+    loading: true,
     loadingFailed: false,
-    errorMessage: ''
-  }  
+    errorMessage: ""
+  };
 
   componentDidMount() {
     // console.log('app.js componentDidMount');
-    
+
     const promiseMovieString = `${this.baseURL.discover}/movie?api_key=${this.KEY}`;
     // console.log('app.js promiseMovieString');
     // console.log(promiseMovieString);
@@ -51,123 +52,138 @@ class App extends Component {
     const promiseTVString = `${this.baseURL.discover}/tv?api_key=${this.KEY}&language=en-US&sort_by=popularity.desc&page=1&timezone=America%2FNew_York&include_null_first_air_dates=false`;
     // console.log('app.js promiseTV');
     // console.log(promiseTVString);
-    
+
     const promiseTV = Axios.get(promiseTVString);
 
-
-    const promisePersonString = `${this.baseURL.popularPerson}api_key=${this.KEY}&language=en-US&page=1`
+    const promisePersonString = `${this.baseURL.popularPerson}api_key=${this.KEY}&language=en-US&page=1`;
     // console.log('app.js promisePerson');
     // console.log(promisePersonString);
 
-    const promisePerson = Axios.get(promisePersonString)
+    const promisePerson = Axios.get(promisePersonString);
 
     Promise.all([promiseMovie, promiseTV, promisePerson])
-    .then(response=>{
-      // console.log('app.js componentDidMount response')
-      // console.log(respose);
-      const movies = response[0].data.results.map(movie => {
-        movie.posterPath = `${this.imageURL.urlBase}${this.imageURL.sizePoster}${movie.poster_path}`;
-        
-        movie.media_type = 'movie';
+      .then(response => {
+        // console.log("app.js componentDidMount response");
+        // console.log(response);
+        const movies = response[0].data.results.map(movie => {
+          movie.posterPath = movie.poster_path
+            ? `${this.imageURL.urlBase}${this.imageURL.sizePoster}${movie.poster_path}`
+            : defaultPoster;
 
-        return {...movie}
-      })
-      const TVs = response[1].data.results.map(TV => {
-        TV.posterPath = `${this.imageURL.urlBase}${this.imageURL.sizePoster}${TV.poster_path}`;
+          movie.media_type = "movie";
 
-        TV.media_type = 'tv';
+          return { ...movie };
+        });
+        const TVs = response[1].data.results.map(TV => {
+          TV.posterPath = TV.poster_path
+            ? `${this.imageURL.urlBase}${this.imageURL.sizePoster}${TV.poster_path}`
+            : defaultPoster;
 
-        return {...TV}
-      })
-      const persons = response[2].data.results.map(person => {
-        person.posterPath = `${this.imageURL.urlBase}${this.imageURL.sizePoster}${person.profile_path}`;
+          TV.media_type = "tv";
 
-        person.media_type = 'person';
+          return { ...TV };
+        });
+        const persons = response[2].data.results.map(person => {
+          // console.log(`App.js person.profile_path ${person.profile_path}`);
+          person.posterPath = person.profile_path
+            ? `${this.imageURL.urlBase}${this.imageURL.sizePoster}${person.profile_path}`
+            : defaultPoster;
 
-        return {...person}
+          person.media_type = "person";
+
+          return { ...person };
+        });
+        // console.log(movies, series);
+        this.setState({
+          movies,
+          TVs,
+          persons,
+          loading: false
+        });
       })
-      // console.log(movies, series);
-      this.setState({
-        movies,
-        TVs,
-        persons,
-        loading: false
-      })
-    })
-    .catch(err => {
-      // console.log('app.js error');
-      // console.log(err);
-      this.setState({
-        loading:false,
-        loadingFailed: true,
-        errorMessage: err
-      })
-    })
+      .catch(err => {
+        // console.log('app.js error');
+        // console.log(err);
+        this.setState({
+          loading: false,
+          loadingFailed: true,
+          errorMessage: err
+        });
+      });
   }
 
   handleMenuShow = () => {
     this.setState({
       navMenuShow: true
-    })
-  }
+    });
+  };
 
   handleMenuHide = () => {
     this.setState({
-      navMenuShow: false      
-    })
-  }
+      navMenuShow: false
+    });
+  };
 
   render() {
-    let routePages, infoPage, navMenuBtn = null;
+    let routePages,
+      infoPage,
+      navMenuBtn = null;
     if (this.state.loadingFailed) {
       // console.log('app.js errorMessage')
       // console.log(this.state.errorMessage)
-      infoPage = <Route>
-        <Info>{this.state.errorMessage}</Info>
-      </Route>
-    } else if (!this.state.navMenuShow) {
-      routePages= (
-      <Switch>
-        <Route exact path='/'>
-          <Home 
-          displayItems={[
-            {heading:'most popular Movies', data:this.state.movies}, 
-            {heading:'most popular shows', data:this.state.TVs}, 
-            {heading:'most popular persons', data:this.state.persons}
-          ]}
-          loading={this.state.loading}/>
+      infoPage = (
+        <Route>
+          <Info>{this.state.errorMessage}</Info>
         </Route>
-        <Route exact path='/advSearch' component={AdvanceSearch} />
-        <Route exact path='/:media_type/:id' component={SingleMovie} />
-        <Route exact path='/about' component={About} />
-        <Route component={Info} />
-      </Switch>)
+      );
+    } else if (!this.state.navMenuShow) {
+      routePages = (
+        <Switch>
+          <Route exact path={`/`}>
+            <Home
+              displayItems={[
+                { heading: "most popular Movies", data: this.state.movies },
+                { heading: "most popular shows", data: this.state.TVs },
+                { heading: "most popular persons", data: this.state.persons }
+              ]}
+              loading={this.state.loading}
+            />
+          </Route>
+          <Route exact path={`/advSearch`} component={AdvanceSearch} />
+          <Route exact path={`/:media_type/:id`} component={SingleMovie} />
+          <Route exact path={`/about`} component={About} />
+          <Route component={Info} />
+        </Switch>
+      );
     } else {
       // for mobile nav button
-      navMenuBtn = <NavMenu
-      handleMenuHide={this.handleMenuHide}
-      navLinks={this.state.navLinks}/>
+      navMenuBtn = (
+        <NavMenu
+          handleMenuHide={this.handleMenuHide}
+          navLinks={this.state.navLinks}
+        />
+      );
     }
-  
+
     // console.log('app.js render');
-    return (      
-        <Router>
-          <div className={styles.app}>
-            <Navbar
+    return (
+      <Router basename={"/"}>
+        <div className={styles.app}>
+          <Navbar
             navLinks={this.state.navLinks}
             navMenuShow={this.state.navMenuShow}
             handleMenuHide={this.handleMenuHide}
-            handleMenuShow={this.handleMenuShow}/>
-            {routePages}
-            {infoPage}
-            {navMenuBtn}
-            <Footer/>
-          </div>
-          {/* <Test/> */}
-        </Router>
-    )
+            handleMenuShow={this.handleMenuShow}
+          />
+          {routePages}
+          {infoPage}
+          {navMenuBtn}
+          <Footer />
+        </div>
+        {/* <Test/> */}
+      </Router>
+    );
   }
 }
-
 
 export default App;

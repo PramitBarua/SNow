@@ -2,13 +2,13 @@
 
 // .popularDiv{
 //   border:1px solid red;
-  
+
 // }
 
 .homeText {
   font-size: 2rem;
   padding: 0 2rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   text-transform: capitalize;
 }
 
@@ -16,24 +16,24 @@
   display: flex;
   justify-content: center;
   margin: auto;
-  
+
   & button {
     background: none;
     border: none;
-    margin: 2% 0;
+    margin: 1rem 0;
     font-size: 1.5rem;
     color: $primaryColor;
-    padding: .2rem;
-    padding-top: .5rem;
+    padding: 0.2rem;
+    padding-top: 0.5rem;
   }
 }
 
-.cardWrapper { 
+.cardWrapper {
   display: flex;
   justify-content: space-evenly;
   padding: 0 1rem;
-  min-height: 34rem;
-  
+  min-height: 33rem;
+
   // opacity: 0;
   // transition: all 100ms linear;
   // &.loaded {
@@ -60,10 +60,9 @@
   color: #000;
 }
 
-
 .cardsDiv {
-  border:1px solid  green;
-  // display: flex;  
+  border: 1px solid green;
+  // display: flex;
 }
 .errorMessage {
   font-size: 1.5rem;
@@ -71,25 +70,30 @@
 
 @media only screen and (min-width: 600px) {
   .cardWrapper {
-    min-height: 15rem;
+    min-height: 10rem;
   }
 }
 
 @media only screen and (min-width: 800px) {
   .cardWrapper {
-    min-height: 18rem;
+    min-height: 12rem;
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  .cardWrapper {
+    min-height: 16rem;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .cardWrapper {
+    min-height: 10.5rem;
   }
 }
 
 @media only screen and (min-width: 1400px) {
   .cardWrapper {
-    min-height: 22rem;
-  }
-}
-
-
-@media only screen and (min-width: 2000px) {
-  .cardWrapper {
-    min-height: 30rem;
+    min-height: 16rem;
   }
 }

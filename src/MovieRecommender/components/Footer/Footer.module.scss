@@ -1,21 +1,21 @@
-@import '../../variable.module.scss';
+@import "../../variable.module.scss";
 .footer {
-    margin: 0.5rem auto;
-    text-align: center;
-    p {
-        font-size: 1rem;
-        padding: 0.2rem 0;
-        text-transform: capitalize;
+  margin: 0.5rem auto;
+  margin-bottom: 2rem;
+  text-align: center;
+  p {
+    font-size: 1rem;
+    padding: 0.2rem 0;
+    text-transform: capitalize;
+  }
+  a {
+    text-decoration: none;
+    padding: 0.2rem;
+    border-radius: 5px;
+    background-color: $secondaryBackground;
+    transition: all 0.2s;
+    &:hover {
+      transform: scale(1.1);
     }
-    a{
-        text-decoration: none;
-        padding: 0.2rem;
-        border-radius: 5px;
-        background-color: $secondaryBackground;
-        transition: all 0.2s;
-        &:hover {
-            transform: scale(1.1);
-            
-        }
-    }
+  }
 }

@@ -110,7 +110,7 @@ export default class Search extends Component {
           onFocus={(e) => this.handleSearchInputOnFocus(e)}
           onBlur={(e) => this.handleSearchInputOnBlur(e)}
           onChange={(e) => this.handleSearchInputOnChange(e)}
-          onKeyDown={(e) => this.handleKeyDown(e)}
+          // onKeyDown={(e) => this.handleKeyDown(e)}
           />
         </form>
         {suggestions}
