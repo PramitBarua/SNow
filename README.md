@@ -1,5 +1,6 @@
 # Show Now (SNow)
-Find the movie or TV show that you want to see next
+Find the movie or TV show that you want to see next. Check the live project here
+http://pramitbarua.com/project/snow/
 
 ## Description
 A React application that allows the user to search [the Movie Database (TMDb)](https://developers.themoviedb.org/3/getting-started/introduction)
