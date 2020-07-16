@@ -1,17 +1,16 @@
-@import "../../variable.module.scss";
+@import '../../variable.module.scss';
 
 .inputWrapper {
-  width: 70%;
+  width: 80%;
+  margin: auto;
+  margin-bottom: 2rem;
   height: fit-content;
-  margin: 0 auto;
-  margin-bottom: 1rem;
+  @media (min-width: 600px) {
+    width: 60%;
+  }
 }
 
 .inputform {
-  width: 100%;
-  // height: auto;
-  // margin: auto;
-  // margin-bottom: 1rem;
   position: relative;
   background: linear-gradient(to right, rgba(gray, 1), rgba(gray, 0.1));
   padding: 0;
@@ -20,17 +19,17 @@
   & input {
     width: 100%;
     font-size: 1.5rem;
-    font-family: "Lato", sans-serif;
+    font-family: 'Lato', sans-serif;
     font-weight: 300;
     color: $primaryColor;
     padding: 3px;
     border: none;
     // background-color: $mainBackground;
     background: linear-gradient(
-    90deg,
-    rgba($mainBackground, .7),
-    rgba($offWhite, 0.3)
-  );
+      90deg,
+      rgba($mainBackground, 0.7),
+      rgba($offWhite, 0.3)
+    );
 
     &:focus {
       outline: none;
@@ -45,7 +44,7 @@
   position: absolute;
   font-size: 1.5rem;
   color: gray;
-  top: .3rem;
+  top: 0.3rem;
   left: 0.5rem;
   transition: all 0.2s;
   pointer-events: none;
@@ -61,7 +60,7 @@
 .inputWrapperOnfocus {
   background: linear-gradient(
     to right,
-    rgba($primaryColor, .7),
+    rgba($primaryColor, 0.7),
     rgba($offWhite, 0.3)
   );
 }
@@ -74,10 +73,10 @@
   z-index: 100;
 }
 
-@media only screen and (min-width: 600px) {
-  .inputWrapper {
-    width: 50%;
-    // margin: 0 auto;
-    // margin-bottom: 1rem;
-  }
-}
+// @media only screen and (min-width: 600px) {
+//   .inputWrapper {
+//     width: 50%;
+//     // margin: 0 auto;
+//     // margin-bottom: 1rem;
+//   }
+// }

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import styles from './NavMenu.module.scss';
 
-const Suggestions = (props) => {
+const NavMenu = (props) => {
   const options = props.navLinks.map((r) => {
     return (
       <li key={r.id}>
@@ -17,4 +17,4 @@ const Suggestions = (props) => {
   return <ul className={styles.navMenu}>{options}</ul>;
 };
 
-export default Suggestions;
+export default NavMenu;

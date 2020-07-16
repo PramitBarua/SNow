@@ -150,16 +150,18 @@ class App extends Component {
     return (
       <Router basename={'/'}>
         <div className={styles.app}>
-          <Navbar
-            navLinks={this.state.navLinks}
-            navMenuShow={this.state.navMenuShow}
-            handleMenuHide={this.handleMenuHide}
-            handleMenuShow={this.handleMenuShow}
-          />
-          {routePages}
-          {infoPage}
-          {navMenuBtn}
-          <Footer />
+          <div className={styles.layout}>
+            <Navbar
+              navLinks={this.state.navLinks}
+              navMenuShow={this.state.navMenuShow}
+              handleMenuHide={this.handleMenuHide}
+              handleMenuShow={this.handleMenuShow}
+            />
+            {routePages}
+            {infoPage}
+            {navMenuBtn}
+            <Footer />
+          </div>
         </div>
         {/* <Test/> */}
       </Router>

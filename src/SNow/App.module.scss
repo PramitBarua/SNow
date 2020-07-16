@@ -50,6 +50,14 @@ h3 {
   align-items: baseline;
   margin: auto;
   min-height: 100vh;
+  & .layout {
+    max-width: 100%;
+    overflow-x: hidden;
+    @media only screen and (min-width: 1200px) {
+      max-width: 95vw;
+      overflow-x: hidden;
+    }
+  }
 }
 
 @media only screen and (min-width: 326px) {
@@ -71,9 +79,6 @@ h3 {
 @media only screen and (min-width: 1200px) {
   html {
     font-size: 100%;
-  }
-  .app {
-    margin: 2rem auto;
   }
 }
 

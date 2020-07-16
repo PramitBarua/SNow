@@ -1,157 +1,104 @@
-import React, { Component } from 'react';
-import {
-  FaRegArrowAltCircleLeft,
-  FaRegArrowAltCircleRight,
-} from 'react-icons/fa';
+import React, { useRef } from 'react';
+import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri';
 
 import Card from '../Card/Card';
 import styles from './CardSlider.module.scss';
 
-class CardSlider extends Component {
-  constructor(props) {
-    super(props);
+function CardSlider(props) {
+  const getScrollRefPositions = () => {
+    const container = scrollRef.current;
 
-    let windowMobile, end, cardRenderSteps;
+    const scrollPositionLeft = scrollRef.current.scrollLeft;
+    const scrollWidth = scrollRef.current.scrollWidth;
+    const scrollOffsetWidth = scrollRef.current.offsetWidth;
 
-    if (window.innerWidth < 600) {
-      windowMobile = true;
-      end = 1;
-      cardRenderSteps = 1;
-    } else {
-      windowMobile = false;
-      end = 5;
-      cardRenderSteps = 5;
-    }
-    this.state = {
-      start: 0,
-      end,
-      cardRenderSteps,
-      windowMobile,
-    };
-  }
-
-  componentDidMount() {
-    window.addEventListener('resize', this.handleResize);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.handleResize);
-  }
-
-  handleResize = (e) => {
-    if (window.innerWidth < 600) {
-      if (!this.state.windowMobile) {
-        this.setState({
-          start: 0,
-          end: 1,
-          cardRenderSteps: 1,
-          windowMobile: true,
-        });
-      }
-    } else {
-      if (this.state.windowMobile) {
-        this.setState({
-          start: 0,
-          end: 5,
-          cardRenderSteps: 5,
-          windowMobile: false,
-        });
-      }
-    }
+    return { container, scrollPositionLeft, scrollWidth, scrollOffsetWidth };
   };
 
-  handleRightButtonClick = () => {
-    let oldState = { ...this.state };
+  const handleBtnRight = () => {
+    const {
+      container,
+      scrollPositionLeft,
+      scrollWidth,
+      scrollOffsetWidth,
+    } = getScrollRefPositions();
 
-    if (oldState.end === this.props.displayItems.data.length) {
-      oldState.start = 0;
-      oldState.end = this.state.cardRenderSteps;
-    } else {
-      oldState.start = oldState.start + this.state.cardRenderSteps;
-      oldState.end = oldState.end + this.state.cardRenderSteps;
-    }
-
-    this.setState({
-      ...oldState,
+    container.scrollTo({
+      top: 0,
+      left:
+        scrollPositionLeft + Math.round((scrollWidth - scrollOffsetWidth) / 20),
+      behaviour: 'smooth',
     });
   };
 
-  handleLeftButtonClick = () => {
-    let oldState = { ...this.state };
+  const handleBtnLeft = () => {
+    const {
+      container,
+      scrollPositionLeft,
+      scrollWidth,
+      scrollOffsetWidth,
+    } = getScrollRefPositions();
 
-    if (oldState.start === 0) {
-      oldState.start =
-        this.props.displayItems.data.length - this.state.cardRenderSteps;
-      oldState.end = this.props.displayItems.data.length;
-    } else {
-      oldState.start = oldState.start - this.state.cardRenderSteps;
-      oldState.end = oldState.end - this.state.cardRenderSteps;
-    }
-
-    this.setState({
-      ...oldState,
+    container.scrollTo({
+      top: 0,
+      left:
+        scrollPositionLeft - Math.round((scrollWidth - scrollOffsetWidth) / 20),
+      behaviour: 'smooth',
     });
   };
 
-  render() {
-    let dataLength,
-      sliderBtnJSX,
-      renderData,
-      cards = null;
+  const scrollRef = useRef(null);
 
-    dataLength = this.props.displayItems.data.length;
+  let renderData,
+    heading,
+    cards = null;
 
-    if (dataLength >= this.state.cardRenderSteps * 2) {
-      sliderBtnJSX = (
-        <div className={styles.btnWrapper}>
-          <button onClick={this.handleLeftButtonClick}>
-            <FaRegArrowAltCircleLeft />
-          </button>
-          <button onClick={this.handleRightButtonClick}>
-            <FaRegArrowAltCircleRight />
-          </button>
-        </div>
-      );
-    }
+  renderData = props.displayItems.data;
+  heading = props.displayItems.heading;
 
-    if (dataLength <= this.state.cardRenderSteps) {
-      renderData = this.props.displayItems.data;
-    } else {
-      renderData = this.props.displayItems.data.slice(
-        0,
-        parseInt(dataLength / this.state.cardRenderSteps) *
-          this.state.cardRenderSteps
-      );
-    }
-
-    if (dataLength === 0) {
-      cards = (
-        <p className={styles.errorMessage}>
-          Nothing has Found!!! Please try again
-        </p>
-      );
-    } else {
-      cards = renderData.slice(this.state.start, this.state.end).map((item) => {
-        const name = item.title ? item.title : item.name;
-        return (
-          <Card
-            key={item.id}
-            toLink={`/${item.media_type}/${item.id}`}
-            image_path={item.posterPath}
-            alt={`poster of ${name}`}
-          />
-        );
-      });
-    }
-
-    return (
-      <div className={styles.cardSection}>
-        <p className={styles.homeText}>{this.props.displayItems.heading}</p>
-        <div className={styles.cardWrapper}>{cards}</div>
-        {sliderBtnJSX}
-      </div>
+  if (renderData.length === 0) {
+    cards = (
+      <p className={styles.errorMessage}>
+        Nothing has Found!!! Please try again
+      </p>
     );
+  } else {
+    cards = renderData.map((item) => {
+      const name = item.title ? item.title : item.name;
+      return (
+        <Card
+          key={item.id}
+          toLink={`/${item.media_type}/${item.id}`}
+          image_path={item.posterPath}
+          alt={`poster of ${name}`}
+        />
+      );
+    });
   }
+
+  return (
+    <div className={styles.cardSection}>
+      <p className={styles.homeText}>{heading}</p>
+
+      <div ref={scrollRef} className={styles.cardWrapper}>
+        {cards}
+      </div>
+      <div className={styles.btnContainer}>
+        <button
+          className={`${styles.btn} ${styles.btnLeft}`}
+          onClick={handleBtnLeft}
+        >
+          <RiArrowLeftSLine />
+        </button>
+        <button
+          className={`${styles.btn} ${styles.btnRight}`}
+          onClick={handleBtnRight}
+        >
+          <RiArrowRightSLine />
+        </button>
+      </div>
+    </div>
+  );
 }
 
 export default CardSlider;

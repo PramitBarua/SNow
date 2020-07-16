@@ -1,55 +1,56 @@
-@import "../../variable.module.scss";
+@import '../../variable.module.scss';
 
 .cardSection {
-  margin-top: 1rem;
+  margin: 2rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  @media (min-width: 600px) {
-    display: block;
+  &:hover {
   }
   & .homeText {
     font-size: 2rem;
-    padding: 0 2rem;
-    margin: auto;
     margin-bottom: 0.7rem;
     text-transform: capitalize;
+  }
+
+  & .btnContainer {
+    display: none;
+
     @media (min-width: 600px) {
-      margin: 0;
-      margin-bottom: 0.5rem;
+      position: relative;
+      top: -9rem;
+      z-index: 99;
+      display: flex;
+      justify-content: space-between;
+      margin: 0 0.1rem;
     }
   }
 
-  & .btnWrapper {
+  & .btn {
+    width: 2rem;
+    height: 2rem;
     display: flex;
     justify-content: center;
-    margin: auto;
-
-    & button {
-      background: none;
-      border: none;
-      margin: 1rem 0;
-      font-size: 1.5rem;
-      color: $primaryColor;
-      padding: 0.2rem;
-      padding-top: 0.5rem;
-    }
+    align-items: center;
+    border-radius: 50%;
+    border: none;
   }
 
   & .cardWrapper {
     display: flex;
-    justify-content: center;
-    padding: 0 1rem;
-    min-height: 41rem;
-    @media (min-width: 600px) {
-      justify-content: space-between;
-      padding: 0 2rem;
-      min-height: 12rem;
-    }
-    @media (min-width: 1200px) {
-      min-height: 15rem;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    align-items: center;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    &::-webkit-scrollbar {
+      /* WebKit */
+      width: 0;
+      height: 0;
     }
   }
+  // @media (min-width: 1200px) {
+  //   min-height: 15rem;
+  // }
 
   @keyframes movedown {
     0% {
