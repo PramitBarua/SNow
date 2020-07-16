@@ -1,0 +1,35 @@
+@import "../../variable.module.scss";
+
+.suggestions {
+  // width: 65%;
+  // margin: auto;
+  list-style: none;
+  font-size: 1.5rem;
+  width: inherit;
+  max-width: 700px;
+  position: absolute;
+  background: $mainBackground;
+  & li {
+    text-decoration: none;
+    width: 100%;
+    & a {
+      width: 100%;
+    }
+    &:hover {
+      background-color: $secondaryBackground;
+    }
+  }
+  // & a {
+  //   width: 100%;
+  // }
+}
+
+.active {
+  border: 2px solid $primaryColor;
+  border-top: none;
+}
+// @media only screen and (min-width: 600px) {
+//   .suggestions {
+//     width: 50%;
+//   }
+// }
