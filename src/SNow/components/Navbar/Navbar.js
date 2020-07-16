@@ -35,10 +35,9 @@ const Navbar = (props) => {
     </Link>
   );
 
-  navLinksJSX = handleNavLinks(navLinks, handleMenuHide);
-  // sidebarJSX = null;
-  // navDivClass = null;
+  navLinksJSX = handleNavLinks(navLinks);
 
+  // default show burger menu icon
   navBtn = (
     <button className={styles.btn} type="button" onClick={handleMenuShow}>
       <FaBars className={styles.btn_icon}></FaBars>
@@ -46,9 +45,7 @@ const Navbar = (props) => {
   );
 
   if (navMenuShow) {
-    // sidebarJSX=handleNavLinks(navLinks, handleMenuHide, styles.nav_link_clicked)
-    // navDivClass = styles.nav_onClick;
-
+    // show close icon
     navBtn = (
       <button className={styles.btn} type="button" onClick={handleMenuHide}>
         <FaWindowClose className={styles.btn_icon}></FaWindowClose>
@@ -68,9 +65,3 @@ const Navbar = (props) => {
 };
 
 export default Navbar;
-
-// logo in green
-// src="https://www.themoviedb.org/assets/2/v4/logos/primary-green-d70eebe18a5eb5b166d5c1ef0796715b8d1a2cbc698f96d311d62f894ae87085.svg"
-
-//logo in black
-// src='https://www.themoviedb.org/assets/2/v4/logos/primary-blue-40c00543e47b657e8e53a2f3e8650eb9de230316cf158965edb012d72ddca755.svg'
