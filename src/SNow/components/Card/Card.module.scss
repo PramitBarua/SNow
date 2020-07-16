@@ -2,13 +2,12 @@
   font-size: 0;
   line-height: 0;
   margin-right: 2.5rem;
-  min-width: 18rem;
-  height: 27rem;
+  min-width: 12rem;
+  height: 18rem;
   border-radius: 5px;
   transition: all 1s;
   animation-name: movedown;
   animation-duration: 1.5s;
-  // opacity: 0.8;
   &:hover {
     img {
       transition: all 0.3s linear;

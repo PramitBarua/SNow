@@ -12,19 +12,10 @@
     text-transform: capitalize;
   }
 
-  & .btnContainer {
-    display: none;
-
-    @media (min-width: 600px) {
-      position: relative;
-      top: -9rem;
-      z-index: 99;
-      display: flex;
-      justify-content: space-between;
-      margin: 0 0.1rem;
-    }
+  & .sliderContainer {
+    position: relative;
   }
-
+  // display: flex;
   & .btn {
     width: 2rem;
     height: 2rem;
@@ -33,6 +24,20 @@
     align-items: center;
     border-radius: 50%;
     border: none;
+  }
+
+  & .btnLeft {
+    position: absolute;
+    top: 8rem;
+    left: 0;
+    z-index: 99;
+  }
+
+  & .btnRight {
+    position: absolute;
+    top: 8rem;
+    right: 0;
+    z-index: 99;
   }
 
   & .cardWrapper {
@@ -47,7 +52,9 @@
       width: 0;
       height: 0;
     }
+    // }
   }
+
   // @media (min-width: 1200px) {
   //   min-height: 15rem;
   // }

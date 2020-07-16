@@ -79,17 +79,18 @@ function CardSlider(props) {
   return (
     <div className={styles.cardSection}>
       <p className={styles.homeText}>{heading}</p>
-
-      <div ref={scrollRef} className={styles.cardWrapper}>
-        {cards}
-      </div>
-      <div className={styles.btnContainer}>
+      <div className={styles.sliderContainer}>
         <button
           className={`${styles.btn} ${styles.btnLeft}`}
           onClick={handleBtnLeft}
         >
           <RiArrowLeftSLine />
         </button>
+
+        <div ref={scrollRef} className={styles.cardWrapper}>
+          {cards}
+        </div>
+
         <button
           className={`${styles.btn} ${styles.btnRight}`}
           onClick={handleBtnRight}
