@@ -7,8 +7,10 @@ const functionGeneral = () => {
     },
     image: {
       urlBase: 'https://image.tmdb.org/t/p/',
-      sizePoster: 'w500',
-      sizeBackDrop: 'w1280',
+      sizePosterBig: 'w500',
+      sizePosterSmall: 'w185',
+      // sizeBackDrop: 'w1280',
+      sizeBackDrop: 'w780',
     },
     genre: {
       movie: [

@@ -39,7 +39,7 @@ class SinglePage extends Component {
         if (media_type === 'movie' || media_type === 'tv') {
           data.title = data.title ? data.title : data.name;
           data.posterPath = data.poster_path
-            ? `${imageURL.urlBase}${imageURL.sizePoster}${data.poster_path}`
+            ? `${imageURL.urlBase}${imageURL.sizePosterBig}${data.poster_path}`
             : defaultPoster;
           data.releaseDate = data.release_date
             ? data.release_date
@@ -59,7 +59,7 @@ class SinglePage extends Component {
           data.genre = data.genres.map((genre) => genre.name);
         } else {
           data.posterPath = data.profile_path
-            ? `${imageURL.urlBase}${imageURL.sizePoster}${data.profile_path}`
+            ? `${imageURL.urlBase}${imageURL.sizePosterBig}${data.profile_path}`
             : defaultPoster;
           data.homepage = data.homepage ? data.homepage : '-';
         }

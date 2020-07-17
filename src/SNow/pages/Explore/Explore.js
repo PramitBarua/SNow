@@ -118,7 +118,7 @@ class Explore extends Component {
         if (this.state.searchingFor === 'Movie') {
           searchResult = response.data.results.map((item) => {
             item.posterPath = item.poster_path
-              ? `${this.imageURL.urlBase}${this.imageURL.sizePoster}${item.poster_path}`
+              ? `${this.imageURL.urlBase}${this.imageURL.sizePosterSmall}${item.poster_path}`
               : defaultPoster;
 
             item.media_type = 'movie';
@@ -128,7 +128,7 @@ class Explore extends Component {
         } else {
           searchResult = response.data.results.map((item) => {
             item.posterPath = item.poster_path
-              ? `${this.imageURL.urlBase}${this.imageURL.sizePoster}${item.poster_path}`
+              ? `${this.imageURL.urlBase}${this.imageURL.sizePosterSmall}${item.poster_path}`
               : defaultPoster;
 
             item.media_type = 'tv';

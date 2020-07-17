@@ -54,7 +54,7 @@ class App extends Component {
       .then((response) => {
         const movies = response[0].data.results.map((movie) => {
           movie.posterPath = movie.poster_path
-            ? `${this.imageURL.urlBase}${this.imageURL.sizePoster}${movie.poster_path}`
+            ? `${this.imageURL.urlBase}${this.imageURL.sizePosterSmall}${movie.poster_path}`
             : defaultPoster;
 
           movie.media_type = 'movie';
@@ -63,7 +63,7 @@ class App extends Component {
         });
         const TVs = response[1].data.results.map((TV) => {
           TV.posterPath = TV.poster_path
-            ? `${this.imageURL.urlBase}${this.imageURL.sizePoster}${TV.poster_path}`
+            ? `${this.imageURL.urlBase}${this.imageURL.sizePosterSmall}${TV.poster_path}`
             : defaultPoster;
 
           TV.media_type = 'tv';
@@ -72,7 +72,7 @@ class App extends Component {
         });
         const persons = response[2].data.results.map((person) => {
           person.posterPath = person.profile_path
-            ? `${this.imageURL.urlBase}${this.imageURL.sizePoster}${person.profile_path}`
+            ? `${this.imageURL.urlBase}${this.imageURL.sizePosterSmall}${person.profile_path}`
             : defaultPoster;
 
           person.media_type = 'person';
