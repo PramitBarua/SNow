@@ -1,18 +1,34 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 import styles from './Search.module.scss';
-import Suggestions from '../Suggestions/Suggestions';
 
 const KEY = process.env.REACT_APP_MOVIE_API_KEY;
 const API_URL = 'https://api.themoviedb.org/3/search/multi?';
 
 export default class Search extends Component {
-  state = {
-    results: [],
-    cursor: 0,
-    searchShow: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      results: [],
+      cursor: 0,
+      searchShow: false,
+    };
+
+    this.selectRef = React.createRef();
+    this.inputRef = React.createRef();
+  }
+
+  componentDidUpdate() {
+    if (this.selectRef.current) {
+      if (this.selectRef.current.innerHTML !== '') {
+        this.selectRef.current.focus();
+      } else if (this.inputRef.current) {
+        this.inputRef.current.focus();
+      }
+    }
+  }
 
   removeSeachResults = () => {
     this.setState({
@@ -42,7 +58,7 @@ export default class Search extends Component {
 
     query = e.target.value;
 
-    if (query.length > 1) {
+    if (query !== '') {
       axios
         .get(
           `${API_URL}api_key=${KEY}&language=en-US&query=${query}&page=1&include_adult=false`
@@ -67,41 +83,77 @@ export default class Search extends Component {
           });
 
           this.setState({
-            results: quickresults.slice(0, 5),
+            results: [
+              { id: null, type: null, title: null },
+              ...quickresults.slice(0, 5),
+            ],
+            cursor: 0,
             searchShow: true,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+          this.setState({
+            results: [],
+            cursor: 0,
+            searchShow: false,
           });
         });
     } else {
       this.setState({
         results: [],
+        cursor: 0,
         searchShow: false,
       });
     }
   };
 
-  handleKeyDown(e) {
+  handleArrowKey = (e) => {
+    e.preventDefault();
+
     const { cursor, results } = this.state;
-    // arrow up/down button should select next/previous list element
+
     if (e.keyCode === 38 && cursor > 0) {
+      // pressed up arrow key
+
       this.setState((prevState) => ({
+        ...prevState,
         cursor: prevState.cursor - 1,
       }));
     } else if (e.keyCode === 40 && cursor < results.length - 1) {
+      // pressed down arrow key
+
       this.setState((prevState) => ({
+        ...prevState,
         cursor: prevState.cursor + 1,
       }));
     }
-  }
+  };
 
   render() {
-    let suggestions = this.state.searchShow ? (
-      <Suggestions
-        className={styles.searchSuggestion}
-        resutls={this.state.results}
-        onFocus={this.state.searchShow}
-        removeResults={this.removeSeachResults}
-      />
-    ) : null;
+    let suggestions = null;
+    let highlightId;
+
+    if (this.state.searchShow && this.state.results.length > 0) {
+      highlightId = this.state.results[this.state.cursor].id;
+      suggestions = (
+        <ul className={styles.suggestions} onKeyDown={this.handleArrowKey}>
+          {this.state.results.map((r) => {
+            return (
+              <li key={r.id}>
+                <Link
+                  to={`/${r.type}/${r.id}`}
+                  onClick={this.removeSeachResults}
+                  ref={r.id === highlightId ? this.selectRef : null}
+                >
+                  {r.title}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      );
+    }
 
     return (
       <div className={styles.inputWrapper}>
@@ -110,10 +162,12 @@ export default class Search extends Component {
             Search Movie, TV Series or Person...
           </span>
           <input
-            type="select"
-            onFocus={(e) => this.handleSearchInputOnFocus(e)}
-            onBlur={(e) => this.handleSearchInputOnBlur(e)}
-            onChange={(e) => this.handleSearchInputOnChange(e)}
+            type="text"
+            ref={this.inputRef}
+            onFocus={this.handleSearchInputOnFocus}
+            onBlur={this.handleSearchInputOnBlur}
+            onChange={this.handleSearchInputOnChange}
+            onKeyUp={this.handleArrowKey}
           />
         </form>
         {suggestions}
