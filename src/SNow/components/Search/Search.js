@@ -109,8 +109,6 @@ export default class Search extends Component {
   };
 
   handleArrowKey = (e) => {
-    console.log('handleArrowKey');
-
     const { cursor, results } = this.state;
 
     if (e.keyCode === 38 && cursor > 0) {

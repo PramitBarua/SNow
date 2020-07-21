@@ -13,8 +13,17 @@ class SinglePage extends Component {
     loading: true,
     error: false,
     data: {},
+    showFullDescription: false,
   };
 
+  toggleDescriptionShow = () => {
+    this.setState((prevState) => {
+      return {
+        ...prevState,
+        showFullDescription: !prevState.showFullDescription,
+      };
+    });
+  };
   getData = () => {
     const baseURL = functionGeneral().getBaseURL();
     const imageURL = functionGeneral().getImageURL();
@@ -57,11 +66,13 @@ class SinglePage extends Component {
           }
           // data.runtime = data.runtime ? data.runtime.join(', ') : data.episode_run_time.join(', ')
           data.genre = data.genres.map((genre) => genre.name);
+          data.description = data.overview;
         } else {
           data.posterPath = data.profile_path
             ? `${imageURL.urlBase}${imageURL.sizePosterBig}${data.profile_path}`
             : defaultPoster;
           data.homepage = data.homepage ? data.homepage : '-';
+          data.description = data.biography;
         }
 
         this.setState({
@@ -94,9 +105,11 @@ class SinglePage extends Component {
   }
 
   render() {
-    let pageJSX,
-      articleJSX,
-      data = null;
+    let pageJSX = null;
+    let articleJSX = null;
+    let data = null;
+    let description = null;
+
     if (this.state.loading) {
       pageJSX = <Loading />;
     } else if (this.state.error) {
@@ -108,12 +121,36 @@ class SinglePage extends Component {
       );
     } else {
       data = this.state.data;
+
+      if (data.description.length > 150) {
+        if (this.state.showFullDescription) {
+          description = (
+            <p>
+              {data.description}
+              <button onClick={this.toggleDescriptionShow}>Show Less</button>
+            </p>
+          );
+        } else {
+          description = (
+            <p>
+              {`${data.description.slice(0, 150)}... `}
+              <button onClick={this.toggleDescriptionShow}>Show More</button>
+            </p>
+          );
+        }
+      } else {
+        description = <p>{data.description}</p>;
+      }
+
       if (data.media_type === 'movie' || data.media_type === 'tv') {
         articleJSX = (
           <article>
             <h1>{data.title}</h1>
-            <p>{data.overview}</p>
+
+            <div className={styles.description}>{description}</div>
+
             <h2 className={styles.genre}>{data.genre.join(', ')}</h2>
+
             <div className={styles.sideItemText}>
               <div>
                 <h3>Release Date</h3>
@@ -124,6 +161,7 @@ class SinglePage extends Component {
                 <p>{data.avgVote} / 10</p>
               </div>
             </div>
+
             <div className={styles.sideItemText}>
               <div>
                 <h3>Status</h3>
@@ -140,7 +178,8 @@ class SinglePage extends Component {
         articleJSX = (
           <article>
             <h1>{data.name}</h1>
-            <p>{data.biography}</p>
+
+            <div className={styles.description}>{description}</div>
 
             <div className={styles.sideItemText}>
               <div>
@@ -152,6 +191,7 @@ class SinglePage extends Component {
                 <p>{data.known_for_department}</p>
               </div>
             </div>
+
             <div className={styles.sideItemText}>
               <div>
                 <h3>Gender</h3>

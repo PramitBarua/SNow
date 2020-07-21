@@ -3,7 +3,7 @@
 .singleMovie {
   background-position: center;
   background-size: cover;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   color: $secondaryColor;
   text-align: justify;
   padding: 1rem 0;
@@ -45,6 +45,19 @@
   }
 }
 
+.description {
+  & button {
+    background: none;
+    font-size: 1.2rem;
+    border: none;
+    border-bottom: 1px solid $secondaryColor;
+    // text-decoration: underline;
+    color: $secondaryColor;
+    margin: 0 0.5rem;
+    padding: 0.1rem 0;
+  }
+}
+
 .errorText {
   text-align: center;
   font-size: 2rem;
@@ -62,7 +75,6 @@
     }
   }
   .posterImage {
-    // max-width: 80%;
     padding: 0 1rem;
   }
 }
