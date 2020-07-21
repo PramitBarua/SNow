@@ -109,12 +109,13 @@ export default class Search extends Component {
   };
 
   handleArrowKey = (e) => {
-    e.preventDefault();
+    console.log('handleArrowKey');
 
     const { cursor, results } = this.state;
 
     if (e.keyCode === 38 && cursor > 0) {
       // pressed up arrow key
+      e.preventDefault();
 
       this.setState((prevState) => ({
         ...prevState,
@@ -122,7 +123,7 @@ export default class Search extends Component {
       }));
     } else if (e.keyCode === 40 && cursor < results.length - 1) {
       // pressed down arrow key
-
+      e.preventDefault();
       this.setState((prevState) => ({
         ...prevState,
         cursor: prevState.cursor + 1,
